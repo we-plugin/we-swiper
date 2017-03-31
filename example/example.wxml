@@ -1,0 +1,13 @@
+<!--滑动解决方案-->
+
+<view class="we-container {{swiper.direction === 'horizontal' ? 'we-container-horizontal' : 'we-container-vertical'}}">
+  <view class="we-wrapper"
+    bindtouchstart="touchstart"
+    bindtouchmove="touchmove"
+    bindtouchend="touchend"
+    style="transform: translate({{swiper.translateX || 0}}px, {{swiper.translateY || 0}}px); transition-duration: {{swiper.duration || 0}}ms">
+    <view class="we-slide">slide 1</view>
+    <view class="we-slide">slide 2</view>
+    <view class="we-slide">slide 3</view>
+  </view>
+</view>
