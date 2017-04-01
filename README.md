@@ -171,30 +171,30 @@ Page(option)
 
 ## 属性
 
-> swiper.activeIndex
+* swiper.activeIndex
 
 返回当前活动块(激活块)的索引
 
-> swiper.previousIndex
+* swiper.previousIndex
 
 返回上一个活动块的索引
 
-> swiper.width
+* swiper.width
 
 返回swiper容器的宽度
 
-> swiper.height
+* swiper.height
 
 返回swiper容器的高度
 
-> swiper.isBeginning
+* swiper.isBeginning
 
 如果swiper处于最初始位置，返回true
 
-> swiper.isEnd
+* swiper.isEnd
 
 如果swiper处于最末尾位置，返回true
 
-> swiper.speed
+* swiper.speed
 
 返回当前swiper的过渡时长
