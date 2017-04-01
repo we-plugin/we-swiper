@@ -127,10 +127,19 @@ var handle = {
   }
 };
 
-var methods = {
+/**
+ * Created by sail on 2017/4/1.
+ */
+
+var controller = {
   /**
-   * bt: begin time
-   * et: end time
+   * 切换控制器
+   * @param bt
+   * @param et
+   * @param from
+   * @param to
+   * @param wrapperDistance
+   * @returns {*}
    */
   action: function action(bt, et, from, to, wrapperDistance) {
     var activeIndex = this.activeIndex,
@@ -155,10 +164,14 @@ var methods = {
     if (to = from) {
       return 'back';
     }
-  },
+  }
+};
 
+var methods = {
   /**
-   * next
+   * 切换至下一个slide
+   * @param runCallbacks： 可选，boolean，设置为false时不会触发onSlideChange回调函数
+   * @param speed: 可选，num(单位ms)，切换速度
    */
   slideNext: function slideNext() {
     var _option;
@@ -203,7 +216,9 @@ var methods = {
   },
 
   /**
-   * prev
+   * 切换至上一个slide
+   * @param runCallbacks： 可选，boolean，设置为false时不会触发onSlideChange回调函数
+   * @param speed: 可选，num(单位ms)，切换速度
    */
   slidePrev: function slidePrev() {
     var _option2;
@@ -248,6 +263,8 @@ var methods = {
 
   /**
    * 回弹
+   * @param runCallbacks: 可选，boolean，设置为false时不会触发onSlideChange回调函数
+   * @param speed: 可选，num(单位ms)，切换速度
    */
   slideBack: function slideBack() {
     var _option3;
@@ -270,7 +287,15 @@ var methods = {
     typeof onTransitionEnd === 'function' && setTimeout(function () {
       onTransitionEnd(self);
     }, speed); //  slide过渡结束后执行
-  }
+  },
+
+  /**
+   *  切换到指定slide
+   * @param index：必选，num，指定将要切换到的slide的索引
+   * @param speed：可选，num(单位ms)，切换速度
+   * @param runCallbacks：可选，boolean，设置为false时不会触发onSlideChange回调函数
+   */
+  slideTo: function slideTo(index, speed, runCallbacks) {}
 };
 
 var initialSlide = DEFAULT.initialSlide;
@@ -365,6 +390,7 @@ var weSwiper = function () {
   return weSwiper;
 }();
 
+Object.assign(weSwiper.prototype, controller);
 Object.assign(weSwiper.prototype, handle);
 Object.assign(weSwiper.prototype, methods);
 

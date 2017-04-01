@@ -1,4 +1,4 @@
-import weSwiper from '../dist/weSwiper'
+import weSwiper from '../src/main'
 
 const option = {
   data: {
@@ -15,15 +15,14 @@ const option = {
   },
   onLoad () {
     new weSwiper({
-      direction: 'vertical',
+      // direction: 'vertical',
       slideLength: 3,
       /**
        * swiper初始化后执行
        * @param swiper
        */
       onInit (swiper) {
-        console.log('init swiper-----------------')
-        console.log(`current activeIndex is ${swiper.activeIndex}`)
+
       },
       /**
        * 手指碰触slide时执行
@@ -31,7 +30,7 @@ const option = {
        * @param event
        */
       onTouchStart (swiper, event) {
-        console.log('touchstart-----------------')
+
       },
       /**
        * 手指碰触slide并且滑动时执行
@@ -39,7 +38,7 @@ const option = {
        * @param event
        */
       onTouchMove (swiper, event) {
-        console.log('touchmove-----------------')
+
       },
       /**
        * 手指离开slide时执行
@@ -47,7 +46,7 @@ const option = {
        * @param event
        */
       onTouchEnd (swiper, event) {
-        console.log('touchend-----------------')
+
       },
       /**
        *  slide达到过渡条件时执行

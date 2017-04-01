@@ -5,7 +5,7 @@
     bindtouchstart="touchstart"
     bindtouchmove="touchmove"
     bindtouchend="touchend"
-    style="transform: translate({{swiper.translateX || 0}}px, {{swiper.translateY || 0}}px); transition-duration: {{swiper.duration || 0}}ms">
+    animation="{{animationData}}">
     <view class="we-slide">slide 1</view>
     <view class="we-slide">slide 2</view>
     <view class="we-slide">slide 3</view>

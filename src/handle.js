@@ -2,43 +2,44 @@ export default {
 
   start (distance) {
     const self = this
-    const { activeIndex, width, height, direction, rectDistance } = self
+    const { activeIndex, XORY, rectDistance } = self
 
     const translate =  - activeIndex * rectDistance
 
-    self.dProp = direction === 'horizontal' ? 'X' : 'Y'
-
     const option = {
-      [`swiper.translate${self.dProp}`]: translate,
+      [`swiper.translate${XORY}`]: translate,
       'swiper.duration': 0
     }
 
-    self[`tmpStart${self.dProp}`] = distance
-    self[`translate${self.dProp}`] = translate
-    self.bt = new Date().getTime()
-    self.pageContext.setData(option)
+    self[`tmpStart${XORY}`] = distance
+    self[`translate${XORY}`] = translate
+    self.touchStartTime = new Date().getTime()
+    // self.pageContext.setData(option)
+
+    self.slideAnimation(translate, 0)
   },
 
   move (distance) {
     const self = this
-    const { onSlideMove } = self
+    const { onSlideMove, XORY } = self
 
-    const tmpMove = self[`translate${self.dProp}`] + distance - self[`tmpStart${self.dProp}`]
+    const tmpMove = self[`translate${XORY}`] + distance - self[`tmpStart${XORY}`]
 
     const option = {
-      [`swiper.translate${self.dProp}`]: tmpMove,
+      [`swiper.translate${XORY}`]: tmpMove,
       'swiper.duration': 0
     }
-    self.pageContext.setData(option)
+    // self.pageContext.setData(option)
+    self.slideAnimation(tmpMove, 0)
     typeof onSlideMove === 'function' && onSlideMove(self)
   },
 
   end (distance) {
     const self = this
-    const { speed, bt, rectDistance } = self
-    const et = new Date().getTime()
+    const { speed, touchStartTime, rectDistance, XORY } = self
+    const touchEndTime = new Date().getTime()
 
-    const action = self.action(bt, et, self[`tmpStart${self.dProp}`], distance, rectDistance)
+    const action = self.action(touchStartTime, touchEndTime, self[`tmpStart${XORY}`], distance, rectDistance)
 
     self[action](true, speed)
   }

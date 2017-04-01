@@ -26,7 +26,7 @@ cd my-project
 git clone https://github.com/dlhandsome/we-swiper.git
 ```
 
-在项目文件引入``` dist/weSwiper.js```（经rollup打包的文件）进行开发
+在项目文件引入``` dist/weSwiper.js```进行开发
 
 > es6 module
 ``` javascript
@@ -41,20 +41,20 @@ var weSwiper = require('dist/weSwiper')
 > example.wxml
 ``` html
  <view class="we-container {{swiper.direction === 'horizontal' ? 'we-container-horizontal' : 'we-container-vertical'}}">
-  <view class="we-wrapper"
-    bindtouchstart="touchstart"
-    bindtouchmove="touchmove"
-    bindtouchend="touchend"
-    style="transform: translate({{swiper.translateX || 0}}px, {{swiper.translateY || 0}}px); transition-duration: {{swiper.duration || 0}}ms">
-    <view class="we-slide">slide 1</view>
-    <view class="we-slide">slide 2</view>
-    <view class="we-slide">slide 3</view>
-  </view>
-</view>
+   <view class="we-wrapper"
+     bindtouchstart="touchstart"
+     bindtouchmove="touchmove"
+     bindtouchend="touchend"
+     animation="{{animationData}}">
+     <view class="we-slide">slide 1</view>
+     <view class="we-slide">slide 2</view>
+     <view class="we-slide">slide 3</view>
+   </view>
+ </view>
 ```
 > example.js
 ``` javascript
-import weSwiper from '../dist/weSwiper'
+import weSwiper from '../src/main'
 
 const option = {
   data: {
@@ -71,15 +71,14 @@ const option = {
   },
   onLoad () {
     new weSwiper({
-      direction: 'vertical',  // 垂直方向
-      slideLength: 3,  // 必填，由于目前无法直接获取slide页数，目前只能通过参数写入
+      // direction: 'vertical',
+      slideLength: 3,
       /**
        * swiper初始化后执行
        * @param swiper
        */
       onInit (swiper) {
-        console.log('init swiper-----------------')
-        console.log(`current activeIndex is ${swiper.activeIndex}`)
+
       },
       /**
        * 手指碰触slide时执行
@@ -87,7 +86,7 @@ const option = {
        * @param event
        */
       onTouchStart (swiper, event) {
-        console.log('touchstart-----------------')
+
       },
       /**
        * 手指碰触slide并且滑动时执行
@@ -95,7 +94,7 @@ const option = {
        * @param event
        */
       onTouchMove (swiper, event) {
-        console.log('touchmove-----------------')
+
       },
       /**
        * 手指离开slide时执行
@@ -103,7 +102,7 @@ const option = {
        * @param event
        */
       onTouchEnd (swiper, event) {
-        console.log('touchend-----------------')
+
       },
       /**
        *  slide达到过渡条件时执行
@@ -163,5 +162,6 @@ const option = {
   }
 }
 Page(option)
+
 
 ```
