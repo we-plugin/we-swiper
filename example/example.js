@@ -1,4 +1,4 @@
-import weSwiper from '../src/main'
+import weSwiper from '../dist/weSwiper'
 
 const option = {
   data: {
@@ -17,6 +17,7 @@ const option = {
     new weSwiper({
       // direction: 'vertical',
       slideLength: 3,
+      initialSlide: 2,
       /**
        * swiper初始化后执行
        * @param swiper
@@ -52,7 +53,7 @@ const option = {
        *  slide达到过渡条件时执行
        */
       onSlideChangeStart (swiper) {
-        console.log(swiper)
+
       },
       /**
        *  swiper从一个slide过渡到另一个slide结束时执行

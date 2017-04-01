@@ -81,6 +81,7 @@ export default {
       self.previousIndex = activeIndex
       self.activeIndex = index
       self.isBeginning = self.activeIndex === self.initialSlide
+      self.isEnd = self.activeIndex === self.slideLength
 
       runCallbacks && typeof onSlideChangeStart === 'function' && onSlideChangeStart(self)  // slide达到过渡条件时执行
 

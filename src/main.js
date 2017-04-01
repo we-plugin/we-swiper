@@ -6,8 +6,6 @@ import animate from './animate'
 import syncView from './syncView'
 import exception from './exception'
 
-const { initialSlide } = DEFAULT
-
 class weSwiper {
 
   constructor (param) {
@@ -19,7 +17,7 @@ class weSwiper {
 		//  把this依附在Page上下文的wecropper属性上，便于在page钩子函数中访问
 		this.pageContext.swiper = this
 
-    Object.assign(this, DEFAULT, param || {})
+    const all = Object.assign(this, DEFAULT, param || {})
 
     const option = {
       swiper: Object.assign(DEFAULT, param || {})
@@ -27,14 +25,16 @@ class weSwiper {
     this.pageContext.setData(option)
 
     const {
+      initialSlide,
       direction
-    } = this
+    } = all
 
     this.rectDistance = direction === 'horizontal' ? this.width : this.height
     this.XORY = direction === 'horizontal' ? 'X' : 'Y'
     this.activeIndex = initialSlide  //  将初始页码赋给activeIndex
     this.noSwiper = false  //  阻止手势滑动
     this.previousIndex = initialSlide  //  返回上一个活动块的索引，切换前的索引
+    this.slideTo(initialSlide, 0)
     /**
      * 处理callback
      */

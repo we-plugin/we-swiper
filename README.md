@@ -70,6 +70,9 @@ const option = {
     this.swiper.touchend(e)
   },
   onLoad () {
+    /**
+     * weSwiper实例化后，其实例在Page钩子函数中可通过this.swiper访问
+     */
     new weSwiper({
       // direction: 'vertical',
       slideLength: 3,
@@ -165,3 +168,33 @@ Page(option)
 
 
 ```
+
+## 属性
+
+> swiper.activeIndex
+
+返回当前活动块(激活块)的索引
+
+> swiper.previousIndex
+
+返回上一个活动块的索引
+
+> swiper.width
+
+返回swiper容器的宽度
+
+> swiper.height
+
+返回swiper容器的高度
+
+> swiper.isBeginning
+
+如果swiper处于最初始位置，返回true
+
+> swiper.isEnd
+
+如果swiper处于最末尾位置，返回true
+
+> swiper.speed
+
+返回当前swiper的过渡时长

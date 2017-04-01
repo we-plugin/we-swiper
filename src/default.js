@@ -1,11 +1,18 @@
 const device = wx.getSystemInfoSync()  //  获取设备信息
 
 export default {
+  /**
+   * 必填项
+   */
+  slideLength: 3,                //  由于目前无法直接获取slide页数，目前只能通过参数写入
+  animationViewName: 'animationData',   //  对应视图中animation属性名
+  /**
+   * 可选参数
+   */
   width: device.windowWidth,
   height: device.windowHeight,
   direction: 'horizontal',
   initialSlide: 0,
-  slideLength: 3,                //  由于目前无法直接获取slide页数，目前只能通过参数写入
   speed: 300,
   autoplay: false,
   isBeginning: true,              //  是否是初始活动块

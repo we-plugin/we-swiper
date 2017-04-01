@@ -7,8 +7,9 @@ export default {
    * @param animation：动画实例
    */
   syncAnimation (animation) {
+    const { animationViewName } = this  //  获取对应视图中animation属性名
     this.pageContext.setData({
-      animationData: animation.export()
+      [`${animationViewName}`]: animation.export()
     })
   }
 }
