@@ -4,7 +4,7 @@
 const REG = {
   TRANSLATE: /^(0|[1-9][0-9]*|-[1-9][0-9]*)$/,
   SPEED: /^(0|[1-9][0-9]*|-[1-9][0-9]*)$/,
-  TIMINGFUNCTION: /linear|ease|ease-in|ease-in-out|ease-out|step-start|step_end/
+  TIMINGFUNCTION: /linear|ease|ease-in|ease-in-out|ease-out|step-start|step-end/
 }
 
 export default {
@@ -15,7 +15,7 @@ export default {
    * @param timingFunction：过渡类型
    */
   slideAnimation (translate = 0, speed = 300, timingFunction = 'ease') {
-    const { XORY, consoleException } = this
+    const { XORY, animationViewName, consoleException } = this
     try {
       /**
        * 异常处理
@@ -35,7 +35,7 @@ export default {
 
       animation[`translate${XORY}`](translate).step()  //  动画描述
 
-      this.syncAnimation(animation)  //  同步动画到视图
+      this.syncView(animationViewName, animation)  //  同步动画到视图
 
     } catch (err) {
       consoleException(err, 'slideAnimation[Function]')

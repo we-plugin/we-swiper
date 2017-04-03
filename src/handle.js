@@ -1,35 +1,44 @@
 export default {
 
-  start (distance) {
-    const self = this
-    const { activeIndex, XORY, rectDistance } = self
-
+  touchstart (e) {
+    const { onTouchStart, XORY, activeIndex, rectDistance } = this
+    const touch = e.changedTouches[0]
+    const distance = touch[`client${XORY}`]
     const translate =  - activeIndex * rectDistance
 
-    self[`touchStart${XORY}`] = distance
-    self[`translate${XORY}`] = translate
-    self.touchStartTime = new Date().getTime()
+    this[`touchStart${XORY}`] = distance
+    this[`translate${XORY}`] = translate
+    this.touchStartTime = new Date().getTime()
 
-    self.slideAnimation(translate, 0)
+    typeof onTouchStart === 'function' && onTouchStart(this, e) //  当手指碰触到slide时执行
+
+    this.slideAnimation(translate, 0)
   },
 
-  move (distance) {
-    const self = this
-    const { onSlideMove, XORY } = self
+  touchmove (e) {
+    const { onTouchMove, XORY, onSlideMove } = this
+    const touch = e.changedTouches[0]
+    const distance = touch[`client${XORY}`]
+    const tmpMove = this[`translate${XORY}`] + distance - this[`touchStart${XORY}`]
 
-    const tmpMove = self[`translate${XORY}`] + distance - self[`touchStart${XORY}`]
 
-    self.slideAnimation(tmpMove, 0)
-    typeof onSlideMove === 'function' && onSlideMove(self)
+    typeof onTouchMove === 'function' && onTouchMove(this, e) //  手指碰触slide并且滑动时执行
+
+    this.slideAnimation(tmpMove, 0)
+
+    typeof onSlideMove === 'function' && onSlideMove(this)
   },
 
-  end (distance) {
-    const self = this
-    const { speed, touchStartTime, rectDistance, XORY } = self
+  touchend (e) {
+    const { onTouchEnd, XORY, speed, touchStartTime, rectDistance } = this
+    const touch = e.changedTouches[0]
+    const distance = touch[`client${XORY}`]
     const touchEndTime = new Date().getTime()
 
-    const action = self.action(touchStartTime, touchEndTime, self[`touchStart${XORY}`], distance, rectDistance)
+    const action = this.action(touchStartTime, touchEndTime, this[`touchStart${XORY}`], distance, rectDistance)
 
-    self[action](true, speed)
+    typeof onTouchEnd === 'function' && onTouchEnd(this, e) //  手指离开slide时执行
+
+    this[action](true, speed)
   }
 }

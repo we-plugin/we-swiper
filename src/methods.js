@@ -75,13 +75,13 @@ export default {
 
     try {
       if (typeof  index !== 'number') throw 'paramType' //  参数类型错误
-      if (index < 0 || index > slideLength) throw 'bound'   //  越界
+      if (index < 0 || index > slideLength - 1) throw 'bound'   //  越界
 
       const translate = - index * rectDistance
       self.previousIndex = activeIndex
       self.activeIndex = index
       self.isBeginning = self.activeIndex === self.initialSlide
-      self.isEnd = self.activeIndex === self.slideLength
+      self.isEnd = self.activeIndex === self.slideLength - 1
 
       runCallbacks && typeof onSlideChangeStart === 'function' && onSlideChangeStart(self)  // slide达到过渡条件时执行
 

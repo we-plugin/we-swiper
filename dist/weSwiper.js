@@ -10,8 +10,7 @@ var DEFAULT = {
   /**
    * 必填项
    */
-  slideLength: 3, //  由于目前无法直接获取slide页数，目前只能通过参数写入
-  animationViewName: 'animationData', //  对应视图中animation属性名
+  slideLength: 0, //  由于目前无法直接获取slide页数，目前只能通过参数写入
   /**
    * 可选参数
    */
@@ -20,8 +19,10 @@ var DEFAULT = {
   direction: 'horizontal',
   initialSlide: 0,
   speed: 300,
-  autoplay: false,
-  isBeginning: true, //  是否是初始活动块
+  timingFunction: 'ease', //  过渡动画速度曲线
+  autoplay: 0, //  自动播放间隔，设置为0时不自动播放
+  directionViewName: 'directionClass', //  对应视图中direction类名
+  animationViewName: 'animationData', //  对应视图中animation属性名
   /**
    * 事件回调
    * @type {[type]}
@@ -42,44 +43,55 @@ var DEFAULT = {
 };
 
 var handle = {
-  start: function start(distance) {
-    var self = this;
-    var activeIndex = self.activeIndex,
-        XORY = self.XORY,
-        rectDistance = self.rectDistance;
+  touchstart: function touchstart(e) {
+    var onTouchStart = this.onTouchStart,
+        XORY = this.XORY,
+        activeIndex = this.activeIndex,
+        rectDistance = this.rectDistance;
 
-
+    var touch = e.changedTouches[0];
+    var distance = touch['client' + XORY];
     var translate = -activeIndex * rectDistance;
 
-    self['touchStart' + XORY] = distance;
-    self['translate' + XORY] = translate;
-    self.touchStartTime = new Date().getTime();
+    this['touchStart' + XORY] = distance;
+    this['translate' + XORY] = translate;
+    this.touchStartTime = new Date().getTime();
 
-    self.slideAnimation(translate, 0);
+    typeof onTouchStart === 'function' && onTouchStart(this, e); //  当手指碰触到slide时执行
+
+    this.slideAnimation(translate, 0);
   },
-  move: function move(distance) {
-    var self = this;
-    var onSlideMove = self.onSlideMove,
-        XORY = self.XORY;
+  touchmove: function touchmove(e) {
+    var onTouchMove = this.onTouchMove,
+        XORY = this.XORY,
+        onSlideMove = this.onSlideMove;
 
+    var touch = e.changedTouches[0];
+    var distance = touch['client' + XORY];
+    var tmpMove = this['translate' + XORY] + distance - this['touchStart' + XORY];
 
-    var tmpMove = self['translate' + XORY] + distance - self['touchStart' + XORY];
+    typeof onTouchMove === 'function' && onTouchMove(this, e); //  手指碰触slide并且滑动时执行
 
-    self.slideAnimation(tmpMove, 0);
-    typeof onSlideMove === 'function' && onSlideMove(self);
+    this.slideAnimation(tmpMove, 0);
+
+    typeof onSlideMove === 'function' && onSlideMove(this);
   },
-  end: function end(distance) {
-    var self = this;
-    var speed = self.speed,
-        touchStartTime = self.touchStartTime,
-        rectDistance = self.rectDistance,
-        XORY = self.XORY;
+  touchend: function touchend(e) {
+    var onTouchEnd = this.onTouchEnd,
+        XORY = this.XORY,
+        speed = this.speed,
+        touchStartTime = this.touchStartTime,
+        rectDistance = this.rectDistance;
 
+    var touch = e.changedTouches[0];
+    var distance = touch['client' + XORY];
     var touchEndTime = new Date().getTime();
 
-    var action = self.action(touchStartTime, touchEndTime, self['touchStart' + XORY], distance, rectDistance);
+    var action = this.action(touchStartTime, touchEndTime, this['touchStart' + XORY], distance, rectDistance);
 
-    self[action](true, speed);
+    typeof onTouchEnd === 'function' && onTouchEnd(this, e); //  手指离开slide时执行
+
+    this[action](true, speed);
   }
 };
 
@@ -217,13 +229,13 @@ var methods = {
 
     try {
       if (typeof index !== 'number') throw 'paramType'; //  参数类型错误
-      if (index < 0 || index > slideLength) throw 'bound'; //  越界
+      if (index < 0 || index > slideLength - 1) throw 'bound'; //  越界
 
       var translate = -index * rectDistance;
       self.previousIndex = activeIndex;
       self.activeIndex = index;
       self.isBeginning = self.activeIndex === self.initialSlide;
-      self.isEnd = self.activeIndex === self.slideLength;
+      self.isEnd = self.activeIndex === self.slideLength - 1;
 
       runCallbacks && typeof onSlideChangeStart === 'function' && onSlideChangeStart(self); // slide达到过渡条件时执行
 
@@ -247,7 +259,7 @@ var methods = {
 var REG = {
   TRANSLATE: /^(0|[1-9][0-9]*|-[1-9][0-9]*)$/,
   SPEED: /^(0|[1-9][0-9]*|-[1-9][0-9]*)$/,
-  TIMINGFUNCTION: /linear|ease|ease-in|ease-in-out|ease-out|step-start|step_end/
+  TIMINGFUNCTION: /linear|ease|ease-in|ease-in-out|ease-out|step-start|step-end/
 };
 
 var animate = {
@@ -262,6 +274,7 @@ var animate = {
     var speed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 300;
     var timingFunction = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'ease';
     var XORY = this.XORY,
+        animationViewName = this.animationViewName,
         consoleException = this.consoleException;
 
     try {
@@ -283,7 +296,7 @@ var animate = {
 
       animation['translate' + XORY](translate).step(); //  动画描述
 
-      this.syncAnimation(animation); //  同步动画到视图
+      this.syncView(animationViewName, animation); //  同步动画到视图
     } catch (err) {
       consoleException(err, 'slideAnimation[Function]');
     }
@@ -336,15 +349,14 @@ var defineProperty = function (obj, key, value) {
 /**
  * Created by sail on 2017/4/1.
  */
-var syncView = {
+var sync = {
   /**
-   * 同步动画到视图
-   * @param animation：动画实例
+   * 同步设置到视图
+   * @param DEFAULT：默认参数
+   * @param param：构造参数
    */
-  syncAnimation: function syncAnimation(animation) {
-    var animationViewName = this.animationViewName; //  获取对应视图中animation属性名
-
-    this.pageContext.setData(defineProperty({}, "" + animationViewName, animation.export()));
+  syncView: function syncView(viewName, prop) {
+    this.pageContext.setData(defineProperty({}, "" + viewName, prop));
   }
 };
 
@@ -376,80 +388,53 @@ var weSwiper = function () {
     //  获取到当前page上下文
     this.pageContext = pages[pages.length - 1];
     //  把this依附在Page上下文的wecropper属性上，便于在page钩子函数中访问
-    this.pageContext.swiper = this;
+    this.pageContext.weswiper = this;
 
     var all = Object.assign(this, DEFAULT, param || {});
 
-    var option = {
-      swiper: Object.assign(DEFAULT, param || {})
-    };
-    this.pageContext.setData(option);
+    this.init(all);
 
-    var initialSlide = all.initialSlide,
-        direction = all.direction;
-
-
-    this.rectDistance = direction === 'horizontal' ? this.width : this.height;
-    this.XORY = direction === 'horizontal' ? 'X' : 'Y';
-    this.activeIndex = initialSlide; //  将初始页码赋给activeIndex
-    this.noSwiper = false; //  阻止手势滑动
-    this.previousIndex = initialSlide; //  返回上一个活动块的索引，切换前的索引
-    this.slideTo(initialSlide, 0);
-    /**
-     * 处理callback
-     */
-    var onInit = this.onInit;
-
-    typeof onInit === 'function' && onInit(this);
+    // this.syncInit(all)
   }
+
   /**
-   * start touch
+   * 初始化配置
    */
 
 
   createClass(weSwiper, [{
-    key: 'touchstart',
-    value: function touchstart(e) {
-      var onTouchStart = this.onTouchStart,
-          XORY = this.XORY;
+    key: 'init',
+    value: function init(param) {
+      var _this = this;
 
-      var touch = e.changedTouches[0];
-      var distance = touch['client' + XORY];
+      var speed = param.speed,
+          initialSlide = param.initialSlide,
+          direction = param.direction,
+          autoplay = param.autoplay,
+          directionViewName = param.directionViewName;
 
-      typeof onTouchStart === 'function' && onTouchStart(this, e); //  当手指碰触到slide时执行
-      this.start(distance);
-    }
-    /**
-     * touch moving
-     */
 
-  }, {
-    key: 'touchmove',
-    value: function touchmove(e) {
-      var onTouchMove = this.onTouchMove,
-          XORY = this.XORY;
+      var directionClass = direction === 'horizontal' ? 'we-container-horizontal' : 'we-container-vertical';
+      this.syncView(directionViewName, directionClass);
+      this.rectDistance = direction === 'horizontal' ? this.width : this.height;
+      this.XORY = direction === 'horizontal' ? 'X' : 'Y';
+      this.activeIndex = initialSlide; //  将初始页码赋给activeIndex
+      this.noSwiper = false; //  阻止手势滑动
+      this.previousIndex = initialSlide; //  返回上一个活动块的索引，切换前的索引
+      this.slideTo(initialSlide, 0);
+      typeof autoplay === 'number' && autoplay > 0 && setInterval(function () {
+        if (_this.isEnd) {
+          _this.slideTo(0, speed);
+        } else {
+          _this.slideTo(_this.activeIndex + 1, speed);
+        }
+      }, autoplay);
+      /**
+       * 处理callback
+       */
+      var onInit = this.onInit;
 
-      var touch = e.changedTouches[0];
-      var distance = touch['client' + XORY];
-
-      typeof onTouchMove === 'function' && onTouchMove(this, e); //  手指碰触slide并且滑动时执行
-      this.move(distance);
-    }
-    /**
-     * touch ending
-     */
-
-  }, {
-    key: 'touchend',
-    value: function touchend(e) {
-      var onTouchEnd = this.onTouchEnd,
-          XORY = this.XORY;
-
-      var touch = e.changedTouches[0];
-      var distance = touch['client' + XORY];
-
-      typeof onTouchEnd === 'function' && onTouchEnd(this, e); //  手指离开slide时执行
-      this.end(distance);
+      typeof onInit === 'function' && onInit(this);
     }
   }]);
   return weSwiper;
@@ -459,7 +444,7 @@ Object.assign(weSwiper.prototype, controller);
 Object.assign(weSwiper.prototype, handle);
 Object.assign(weSwiper.prototype, methods);
 Object.assign(weSwiper.prototype, animate);
-Object.assign(weSwiper.prototype, syncView);
+Object.assign(weSwiper.prototype, sync);
 Object.assign(weSwiper.prototype, exception);
 
 return weSwiper;

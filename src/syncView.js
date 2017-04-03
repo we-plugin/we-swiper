@@ -3,13 +3,13 @@
  */
 export default {
   /**
-   * 同步动画到视图
-   * @param animation：动画实例
+   * 同步设置到视图
+   * @param DEFAULT：默认参数
+   * @param param：构造参数
    */
-  syncAnimation (animation) {
-    const { animationViewName } = this  //  获取对应视图中animation属性名
+  syncView (viewName, prop) {
     this.pageContext.setData({
-      [`${animationViewName}`]: animation.export()
+      [`${viewName}`]: prop
     })
   }
 }

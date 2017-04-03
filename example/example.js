@@ -1,28 +1,25 @@
 import weSwiper from '../dist/weSwiper'
 
 const option = {
-  data: {
-    swiper: {}
-  },
   touchstart (e) {
-    this.swiper.touchstart(e)
+    this.weswiper.touchstart(e)
   },
   touchmove (e) {
-    this.swiper.touchmove(e)
+    this.weswiper.touchmove(e)
   },
   touchend (e) {
-    this.swiper.touchend(e)
+    this.weswiper.touchend(e)
   },
   onLoad () {
     new weSwiper({
-      // direction: 'vertical',
+      animationViewName: 'animationData',
       slideLength: 3,
-      initialSlide: 2,
+      initialSlide: 0,
       /**
        * swiper初始化后执行
        * @param swiper
        */
-      onInit (swiper) {
+      onInit (weswiper) {
 
       },
       /**
@@ -30,7 +27,7 @@ const option = {
        * @param swiper
        * @param event
        */
-      onTouchStart (swiper, event) {
+      onTouchStart (weswiper, event) {
 
       },
       /**
@@ -38,7 +35,7 @@ const option = {
        * @param swiper
        * @param event
        */
-      onTouchMove (swiper, event) {
+      onTouchMove (weswiper, event) {
 
       },
       /**
@@ -46,49 +43,49 @@ const option = {
        * @param swiper
        * @param event
        */
-      onTouchEnd (swiper, event) {
+      onTouchEnd (weswiper, event) {
 
       },
       /**
        *  slide达到过渡条件时执行
        */
-      onSlideChangeStart (swiper) {
+      onSlideChangeStart (weswiper) {
 
       },
       /**
        *  swiper从一个slide过渡到另一个slide结束时执行
        */
-      onSlideChangeEnd (swiper) {
+      onSlideChangeEnd (weswiper) {
 
       },
       /**
        *  过渡时触发
        */
-      onTransitionStart (swiper) {
+      onTransitionStart (weswiper) {
 
       },
       /**
        *  过渡结束时执行
        */
-      onTransitionEnd (swiper) {
+      onTransitionEnd (weswiper) {
 
       },
       /**
        *  手指触碰swiper并且拖动slide时执行
        */
-      onSlideMove (swiper) {
+      onSlideMove (weswiper) {
 
       },
       /**
        * slide达到过渡条件 且规定了方向 向前（右、下）切换时执行
        */
-      onSlideNextStart (swiper) {
+      onSlideNextStart (weswiper) {
 
       },
       /**
        *  slide达到过渡条件 且规定了方向 向前（右、下）切换结束时执行
        */
-      onSlideNextEnd (swiper) {
+      onSlideNextEnd (weswiper) {
 
       },
       /**
@@ -100,7 +97,7 @@ const option = {
       /**
        *  slide达到过渡条件 且规定了方向 向前（左、上）切换结束时执行
        */
-      onSlidePrevEnd (swiper) {
+      onSlidePrevEnd (weswiper) {
 
       }
     })

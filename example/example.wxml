@@ -1,6 +1,4 @@
-<!--滑动解决方案-->
-
-<view class="we-container {{swiper.direction === 'horizontal' ? 'we-container-horizontal' : 'we-container-vertical'}}">
+<view class="we-container {{directionClass}}">
   <view class="we-wrapper"
     bindtouchstart="touchstart"
     bindtouchmove="touchmove"
