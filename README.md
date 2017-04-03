@@ -40,21 +40,21 @@ var weSwiper = require('dist/weSwiper')
 ## 示例
 #### example.wxml
 ``` html
- <view class="we-container {{swiper.direction === 'horizontal' ? 'we-container-horizontal' : 'we-container-vertical'}}">
-   <view class="we-wrapper"
-     bindtouchstart="touchstart"
-     bindtouchmove="touchmove"
-     bindtouchend="touchend"
-     animation="{{animationData}}">
-     <view class="we-slide">slide 1</view>
-     <view class="we-slide">slide 2</view>
-     <view class="we-slide">slide 3</view>
-   </view>
- </view>
+ <view class="we-container {{directionClass}}">
+  <view class="we-wrapper"
+    bindtouchstart="touchstart"
+    bindtouchmove="touchmove"
+    bindtouchend="touchend"
+    animation="{{animationData}}">
+    <view class="we-slide">slide 1</view>
+    <view class="we-slide">slide 2</view>
+    <view class="we-slide">slide 3</view>
+  </view>
+</view>
 ```
 #### example.js
 ``` javascript
-import weSwiper from '../src/main'
+import weSwiper from '../dist/weSwiper'
 
 const option = {
   touchstart (e) {
