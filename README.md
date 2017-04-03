@@ -26,7 +26,7 @@ cd my-project
 git clone https://github.com/dlhandsome/we-swiper.git
 ```
 
-在项目文件引入``` dist/weSwiper.js```进行开发
+#### 在项目文件引入``` dist/weSwiper.js```进行开发
 
 > es6 module
 ``` javascript
@@ -38,7 +38,7 @@ var weSwiper = require('dist/weSwiper')
 ```
 
 ## 示例
-> example.wxml
+#### example.wxml
 ``` html
  <view class="we-container {{swiper.direction === 'horizontal' ? 'we-container-horizontal' : 'we-container-vertical'}}">
    <view class="we-wrapper"
@@ -52,7 +52,7 @@ var weSwiper = require('dist/weSwiper')
    </view>
  </view>
 ```
-> example.js
+#### example.js
 ``` javascript
 import weSwiper from '../src/main'
 
@@ -167,7 +167,7 @@ Page(option)
 we-swiper的全部配置项、方法、函数
 
 ### we-swiper初始化
-> weSwiper在onLoad方法中实例化
+#### weSwiper在onLoad方法中实例化
 
 ```javascript
 onLoad () {
@@ -185,7 +185,7 @@ touchstart (e) {
 }
 ```
 
-> WXML结构配置
+#### WXML结构配置
 
 ```html
 <view class="we-container {{directionClass}}">
@@ -204,25 +204,25 @@ touchstart (e) {
 
 ## 构造器参数
 
-> 必填项
+### 必填项
 
-slideLength
+#### slideLength
 
 - Type: `Number`
 - Default: `0`
 
 表示slide的页数
 
->可选项
+### 可选项
 
-width
+#### width
 
 - Type: `Number`
 - Default: `device.windowWidth`
 
 设定slide的宽度（横向滑动时slide滑动间隔距离会根据其值计算）
 
-height
+#### height
 
 - Type: `Number`
 - Default: `device.windowHeight`
@@ -230,7 +230,7 @@ height
 设定slide的高度（纵向滑动时slide滑动间隔距离会根据其值计算）
 
 
-direction
+#### direction
 
 - Type: `String`
 - Default: `horizontal`
@@ -240,21 +240,21 @@ direction
 
 设定slide滑动方向
 
-initialSlide
+#### initialSlide
 
 - Type: `Number`
 - Default: `0`
 
 设定初始化时slide的索引
 
-speed
+#### speed
 
 - Type: `Number`
 - Default: `300`
 
 设定slide过渡时长
 
-timingFunction
+#### timingFunction
 
 - Type: `String`
 - Default: `ease`
@@ -269,21 +269,21 @@ timingFunction
     
 设定slide过渡动画速度曲线
 
-autoplay
+#### autoplay
 
 - Type: `Number`
 - Default: `0`
 
 设定slide自动播放间隔时长，设置为0时不自动播放
 
-directionViewName
+#### directionViewName
 
 - Type: `String`
 - Default: `directionClass`
 
 对应视图中direction类名
 
-animationViewName
+#### animationViewName
 
 - Type: `String`
 - Default: `animationData`
@@ -292,37 +292,37 @@ animationViewName
 
 ## 属性
 
-> weswiper.activeIndex
+####  weswiper.activeIndex
 
 返回当前活动块(激活块)的索引
 
-> weswiper.previousIndex
+####  weswiper.previousIndex
 
 返回上一个活动块的索引
 
-> weswiper.width
+#### weswiper.width
 
 返回swiper容器的宽度
 
-> weswiper.height
+####  weswiper.height
 
 返回swiper容器的高度
 
-> weswiper.isBeginning
+####  weswiper.isBeginning
 
 如果swiper处于最初始位置，返回true
 
-> weswiper.isEnd
+####  weswiper.isEnd
 
 如果swiper处于最末尾位置，返回true
 
-> weswiper.speed
+####  weswiper.speed
 
 返回当前swiper的过渡时长
 
 ## 方法
 
-> weswiper.slideNext(runCallbacks, speed)
+####  weswiper.slideNext(runCallbacks, speed)
 
 滑动到后一个slide
 
@@ -330,7 +330,7 @@ animationViewName
     - `runCallbacks`:  可选，设为false不触发onSlideChange回调函数
     - `speed`:  可选，切换速度
 
-> weswiper.slidePrev(runCallbacks, speed)
+####  weswiper.slidePrev(runCallbacks, speed)
 
 滑动到前一个slide。
 
@@ -338,7 +338,7 @@ animationViewName
     - `runCallbacks`:  可选，设为false不触发onSlideChange回调函数
     - `speed`:  可选，切换速度
 
-> weswiper.slideTo(index, speed, runCallbacks)
+####  weswiper.slideTo(index, speed, runCallbacks)
 
 切换到指定slide。
 
@@ -349,60 +349,60 @@ animationViewName
     
 ## 事件回调
 
-> onInit (weswiper)
+####  onInit (weswiper)
 
 回调函数，初始化后执行。
 可选weswiper实例作为参数。
 
-> onTouchStart (weswiper, event)
+####  onTouchStart (weswiper, event)
 
 回调函数，当碰触到slider时执行。可选weswiper和touchstart事件作为参数
 
-> onTouchMove (weswiper, event)
+####  onTouchMove (weswiper, event)
 
 回调函数，手指触碰weswiper并滑动（手指）时执行。此时slide不一定会发生移动，比如你手指的移动方向和weswiper的切换方向垂直时
 
-> onTouchEnd (weswiper, event)
+####  onTouchEnd (weswiper, event)
 
 回调函数，当释放slider时执行。（释放即执行）
 
-> onSlideChangeStart (weswiper)
+####  onSlideChangeStart (weswiper)
 
 回调函数，weswiper从当前slide开始过渡到另一个slide时执行。触摸情况下，如果释放slide时没有达到过渡条件而回弹时不会触发这个函数，此时可用onTransitionStart。
 
 可接受weswiper实例作为参数，输出的activeIndex是过渡后的slide索引
 
-> onSlideChangeEnd (weswiper)
+####  onSlideChangeEnd (weswiper)
 
 回调函数，weswiper从一个slide过渡到另一个slide结束时执行。
 
 可接受swiper实例作为参数。
 
-> onTransitionStart (weswiper)
+####  onTransitionStart (weswiper)
 
 回调函数，过渡开始时触发，接受weswiper实例作为参数。
 
-> onTransitionEnd (weswiper)
+####  onTransitionEnd (weswiper)
 
 回调函数，过渡结束时触发，接收weswiper实例作为参数。
 
-> onSlideMove (weswiper)
+####  onSlideMove (weswiper)
      
 回调函数，手指触碰weswiper并拖动slide时执行。
 
-> onSlideNextStart (weswiper)
+####  onSlideNextStart (weswiper)
 
 回调函数，滑块释放时如果触发slider向前(右、下)切换则执行。类似于onSlideChangeStart，但规定了方向。
 
-> onSlideNextEnd (weswiper)
+####  onSlideNextEnd (weswiper)
 
 回调函数，slider向前(右、下)切换结束时执行。类似于onSlideChangeEnd，但规定了方向。
 
-> onSlidePrevStart (weswiper)
+####  onSlidePrevStart (weswiper)
 
 回调函数，滑块释放时如果触发slider向后(左、上)切换则执行。类似于onSlideChangeStart，但规定了方向。
 
-> onSlidePrevEnd (swiper)
+####  onSlidePrevEnd (swiper)
 
 回调函数，slider向后(左、上)切换结束时执行。类似于onSlideChangeEnd，但规定了方向。
 
