@@ -434,7 +434,7 @@ touchstart (e) {
 
 回调函数，滑块释放时如果触发slider向后(左、上)切换则执行。类似于onSlideChangeStart，但规定了方向。
 
-####  onSlidePrevEnd (swiper)
+####  onSlidePrevEnd (weswiper)
 
 回调函数，slider向后(左、上)切换结束时执行。类似于onSlideChangeEnd，但规定了方向。
 
