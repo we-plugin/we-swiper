@@ -73,14 +73,14 @@ const option = {
       initialSlide: 0,
       /**
        * swiper初始化后执行
-       * @param swiper
+       * @param weswiper
        */
       onInit (weswiper) {
 
       },
       /**
        * 手指碰触slide时执行
-       * @param swiper
+       * @param weswiper
        * @param event
        */
       onTouchStart (weswiper, event) {
@@ -88,7 +88,7 @@ const option = {
       },
       /**
        * 手指碰触slide并且滑动时执行
-       * @param swiper
+       * @param weswiper
        * @param event
        */
       onTouchMove (weswiper, event) {
@@ -96,7 +96,7 @@ const option = {
       },
       /**
        * 手指离开slide时执行
-       * @param swiper
+       * @param weswiper
        * @param event
        */
       onTouchEnd (weswiper, event) {
@@ -179,7 +179,7 @@ onLoad () {
 
 ```javascript
 touchstart (e) {
-  this.swiper.touchstart(e)
+  this.weswiper.touchstart(e)
 }
 ```
 
@@ -437,6 +437,20 @@ touchstart (e) {
 ####  onSlidePrevEnd (swiper)
 
 回调函数，slider向后(左、上)切换结束时执行。类似于onSlideChangeEnd，但规定了方向。
+
+
+## TODO
+
+- 增加示例
+
+## License
+The MIT License(http://opensource.org/licenses/MIT)
+
+请自由地享受和参与开源
+
+## 贡献
+
+如果你有好的意见或建议，欢迎给我提issue或pull request。
 
 
 
