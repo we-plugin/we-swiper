@@ -441,7 +441,7 @@ touchstart (e) {
 
 ## TODO
 
-- 增加示例
+- 增加切换效果：fade，flip等
 
 ## License
 The MIT License(http://opensource.org/licenses/MIT)
