@@ -11,7 +11,6 @@ export default {
    * 错误对照
    */
   consoleException (type, place) {
-    console.log(type)
-    console.log(`%c${place}:${ERROR[type]}`, 'color: red')
+    console.error(`%c${place}:${ERROR[type]}`, 'color: red')
   }
 }
