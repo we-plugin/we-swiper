@@ -1,0 +1,11 @@
+<view class="we-container {{directionClass}}">
+  <view class="we-wrapper"
+    bindtouchstart="touchstart"
+    bindtouchmove="touchmove"
+    bindtouchend="touchend"
+    animation="{{animationData}}">
+    <view class="we-slide">slide 1</view>
+    <view class="we-slide">slide 2</view>
+    <view class="we-slide">slide 3</view>
+  </view>
+</view>

@@ -1,0 +1,20 @@
+@import "../../dist/weSwiper.wxss";
+
+/*************  个人样式 *************/
+.we-slide{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 2rem;
+}
+
+.we-slide:nth-child(1){
+  background-color: #4390EE
+}
+.we-slide:nth-child(2){
+  background-color: #CA4040
+}
+.we-slide:nth-child(3){
+  background-color: #FF8604
+}
