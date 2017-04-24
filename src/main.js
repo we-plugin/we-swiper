@@ -20,8 +20,6 @@ class weSwiper {
     const all = Object.assign(this, DEFAULT, param || {})
 
     this.init(all)
-
-    // this.syncInit(all)
   }
 
   /**

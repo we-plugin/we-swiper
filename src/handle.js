@@ -1,6 +1,7 @@
 export default {
 
   touchstart (e) {
+    if (this.noSwiper) return
     const { onTouchStart, XORY, activeIndex, rectDistance } = this
     const touch = e.changedTouches[0]
     const distance = touch[`client${XORY}`]
@@ -16,6 +17,7 @@ export default {
   },
 
   touchmove (e) {
+    if (this.noSwiper) return
     const { onTouchMove, XORY, onSlideMove } = this
     const touch = e.changedTouches[0]
     const distance = touch[`client${XORY}`]
@@ -30,6 +32,7 @@ export default {
   },
 
   touchend (e) {
+    if (this.noSwiper) return
     const { onTouchEnd, XORY, speed, touchStartTime, rectDistance } = this
     const touch = e.changedTouches[0]
     const distance = touch[`client${XORY}`]

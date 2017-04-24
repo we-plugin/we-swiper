@@ -2,7 +2,6 @@
  * Created by sail on 2017/4/1.
  */
 const REG = {
-  TRANSLATE: /^(0|[1-9][0-9]*|-[1-9][0-9]*)$/,
   SPEED: /^(0|[1-9][0-9]*|-[1-9][0-9]*)$/,
   TIMINGFUNCTION: /linear|ease|ease-in|ease-in-out|ease-out|step-start|step-end/
 }
@@ -20,7 +19,6 @@ export default {
       /**
        * 异常处理
        */
-      if(!REG.TRANSLATE.test(translate)) throw 'paramType'
       if(!REG.SPEED.test(speed)) throw 'paramType'
       if(!REG.TIMINGFUNCTION.test(timingFunction)) throw 'paramType'
       /**
@@ -35,7 +33,7 @@ export default {
 
       animation[`translate${XORY}`](translate).step()  //  动画描述
 
-      this.syncView(animationViewName, animation)  //  同步动画到视图
+      this.syncView(animationViewName, animation.export())  //  同步动画到视图
 
     } catch (err) {
       consoleException(err, 'slideAnimation[Function]')

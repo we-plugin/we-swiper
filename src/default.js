@@ -13,10 +13,10 @@ export default {
   direction: 'horizontal',
   initialSlide: 0,
   speed: 300,
+  effect: 'slide',                      //  过渡效果
   timingFunction: 'ease',               //  过渡动画速度曲线
   autoplay: 0,                          //  自动播放间隔，设置为0时不自动播放
-  directionViewName: 'directionClass',   //  对应视图中direction类名
-  animationViewName: 'animationData',   //  对应视图中animation属性名
+  animationViewName: 'animationData',   //  对应视图wrapper中animation属性名
   /**
    * 事件回调
    * @type {[type]}

@@ -23,12 +23,12 @@ export default {
     const k = distance / deltaTime
 
     if (to > from) {
-      typeof onTransitionStart === 'function' && onTransitionStart(self)  // slide达到过渡条件时执行
+      typeof onTransitionStart === 'function' && onTransitionStart(this)  // slide达到过渡条件时执行
       return (k > 0.3 || distance > wrapperDistance / 2) ? (activeIndex === 0 ? 'slideBack' : 'slidePrev') : 'slideBack'
     }
 
     if (to < from) {
-      typeof onTransitionStart === 'function' && onTransitionStart(self)  // slide达到过渡条件时执行
+      typeof onTransitionStart === 'function' && onTransitionStart(this)  // slide达到过渡条件时执行
       return (k > 0.3 || distance > wrapperDistance / 2) ? (activeIndex === slideLength - 1 ? 'slideBack' : 'slideNext') : 'slideBack'
     }
 

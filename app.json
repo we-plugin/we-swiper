@@ -1,6 +1,9 @@
 {
   "pages":[
-    "example/example"
+    "example/dashboard/dashboard",
+    "example/general/general",
+    "example/card/card",
+    "example/flip/flip"
   ],
   "window":{
     "backgroundTextStyle":"light",

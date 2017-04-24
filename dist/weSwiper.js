@@ -19,10 +19,10 @@ var DEFAULT = {
   direction: 'horizontal',
   initialSlide: 0,
   speed: 300,
+  effect: 'slide', //  过渡效果
   timingFunction: 'ease', //  过渡动画速度曲线
   autoplay: 0, //  自动播放间隔，设置为0时不自动播放
-  directionViewName: 'directionClass', //  对应视图中direction类名
-  animationViewName: 'animationData', //  对应视图中animation属性名
+  animationViewName: 'animationData', //  对应视图wrapper中animation属性名
   /**
    * 事件回调
    * @type {[type]}
@@ -44,6 +44,7 @@ var DEFAULT = {
 
 var handle = {
   touchstart: function touchstart(e) {
+    if (this.noSwiper) return;
     var onTouchStart = this.onTouchStart,
         XORY = this.XORY,
         activeIndex = this.activeIndex,
@@ -62,6 +63,7 @@ var handle = {
     this.slideAnimation(translate, 0);
   },
   touchmove: function touchmove(e) {
+    if (this.noSwiper) return;
     var onTouchMove = this.onTouchMove,
         XORY = this.XORY,
         onSlideMove = this.onSlideMove;
@@ -77,6 +79,7 @@ var handle = {
     typeof onSlideMove === 'function' && onSlideMove(this);
   },
   touchend: function touchend(e) {
+    if (this.noSwiper) return;
     var onTouchEnd = this.onTouchEnd,
         XORY = this.XORY,
         speed = this.speed,
@@ -120,12 +123,12 @@ var controller = {
     var k = distance / deltaTime;
 
     if (to > from) {
-      typeof onTransitionStart === 'function' && onTransitionStart(self); // slide达到过渡条件时执行
+      typeof onTransitionStart === 'function' && onTransitionStart(this); // slide达到过渡条件时执行
       return k > 0.3 || distance > wrapperDistance / 2 ? activeIndex === 0 ? 'slideBack' : 'slidePrev' : 'slideBack';
     }
 
     if (to < from) {
-      typeof onTransitionStart === 'function' && onTransitionStart(self); // slide达到过渡条件时执行
+      typeof onTransitionStart === 'function' && onTransitionStart(this); // slide达到过渡条件时执行
       return k > 0.3 || distance > wrapperDistance / 2 ? activeIndex === slideLength - 1 ? 'slideBack' : 'slideNext' : 'slideBack';
     }
 
@@ -218,7 +221,8 @@ var methods = {
     var runCallbacks = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
     var self = this;
-    var slideLength = self.slideLength,
+    var noSwiper = self.noSwiper,
+        slideLength = self.slideLength,
         activeIndex = self.activeIndex,
         rectDistance = self.rectDistance,
         onSlideChangeStart = self.onSlideChangeStart,
@@ -257,7 +261,6 @@ var methods = {
  * Created by sail on 2017/4/1.
  */
 var REG = {
-  TRANSLATE: /^(0|[1-9][0-9]*|-[1-9][0-9]*)$/,
   SPEED: /^(0|[1-9][0-9]*|-[1-9][0-9]*)$/,
   TIMINGFUNCTION: /linear|ease|ease-in|ease-in-out|ease-out|step-start|step-end/
 };
@@ -281,7 +284,6 @@ var animate = {
       /**
        * 异常处理
        */
-      if (!REG.TRANSLATE.test(translate)) throw 'paramType';
       if (!REG.SPEED.test(speed)) throw 'paramType';
       if (!REG.TIMINGFUNCTION.test(timingFunction)) throw 'paramType';
       /**
@@ -296,7 +298,7 @@ var animate = {
 
       animation['translate' + XORY](translate).step(); //  动画描述
 
-      this.syncView(animationViewName, animation); //  同步动画到视图
+      this.syncView(animationViewName, animation.export()); //  同步动画到视图
     } catch (err) {
       consoleException(err, 'slideAnimation[Function]');
     }
@@ -373,8 +375,7 @@ var exception = {
    * 错误对照
    */
   consoleException: function consoleException(type, place) {
-    console.log(type);
-    console.log('%c' + place + ':' + ERROR[type], 'color: red');
+    console.error('%c' + place + ':' + ERROR[type], 'color: red');
   }
 };
 
@@ -393,8 +394,6 @@ var weSwiper = function () {
     var all = Object.assign(this, DEFAULT, param || {});
 
     this.init(all);
-
-    // this.syncInit(all)
   }
 
   /**
