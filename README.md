@@ -14,9 +14,9 @@
 
 ## ScreenShots
 #### 横向滚动
-![Alt text](https://github.com/dlhandsome/we-swiper/blob/master/screenshots/Gif_20170401_013729.gif?raw=true)
+![Alt text](https://github.com/we-plugin/we-swiper/blob/master/screenshots/Gif_20170401_013729.gif?raw=true)
 #### 纵向滚动
-![Alt text](https://github.com/dlhandsome/we-swiper/blob/master/screenshots/Gif_20170401_013701.gif?raw=true)
+![Alt text](https://github.com/we-plugin/we-swiper/blob/master/screenshots/Gif_20170401_013701.gif?raw=true)
 
 ## 使用方式
 #### 克隆项目至你的目录
