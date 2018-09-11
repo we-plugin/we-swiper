@@ -1,4 +1,7 @@
 {
+  "name": "we-swiper",
+  "version": "0.1.0",
+  "main": "dist/weSwiper.js",
   "scripts": {
     "build": "node build/build.js"
   },
